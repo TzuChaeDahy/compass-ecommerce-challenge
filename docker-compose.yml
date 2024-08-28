@@ -1,0 +1,11 @@
+services:
+  db: 
+    container_name: ecommerce_db
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=develop
+      - POSTGRES_PASSWORD=test@123
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

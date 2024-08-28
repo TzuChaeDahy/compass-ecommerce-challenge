@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    username: develop
+    password: test@123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+        
+# logging:
+#   level:
+#     org:
+#       springframework:
+#         web: DEBUG
