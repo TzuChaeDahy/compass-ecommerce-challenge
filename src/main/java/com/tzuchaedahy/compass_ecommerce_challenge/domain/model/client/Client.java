@@ -1,15 +1,43 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client;
 
-import java.util.List;
+import java.util.Set;
 
+import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "client")
 public class Client {
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String cpf;
+
+    private String name;
+
     private String email;
+
     private String password;
-    private List<Role> roles;
+
+    @Enumerated(EnumType.ORDINAL)
+    @ElementCollection(targetClass = Role.class)
+    @CollectionTable(name = "client_role", joinColumns = @JoinColumn(name = "cpf"))
+    private Set<Role> roles;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    private Set<Buy> buys;
 
     public Client() {
     }
@@ -30,7 +58,11 @@ public class Client {
         return password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Buy> getBuys() {
+        return buys;
+    }   
+
+    public java.util.Set<Role> getRoles() {
         return roles;
     }
 
@@ -50,7 +82,11 @@ public class Client {
         this.password = password;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setBuys(Set<Buy> buys) {
+        this.buys = buys;
     }
 }
