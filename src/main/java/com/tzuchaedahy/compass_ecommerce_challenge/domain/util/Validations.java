@@ -1,4 +1,4 @@
-package com.tzuchaedahy.compass_ecommerce_challenge.util;
+package com.tzuchaedahy.compass_ecommerce_challenge.domain.util;
 
 public class Validations {
     public static Boolean isCPFValid(String cpf) {

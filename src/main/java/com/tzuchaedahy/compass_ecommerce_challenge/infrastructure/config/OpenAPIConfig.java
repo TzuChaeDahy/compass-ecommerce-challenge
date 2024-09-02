@@ -1,4 +1,4 @@
-package com.tzuchaedahy.compass_ecommerce_challenge.config.swagger;
+package com.tzuchaedahy.compass_ecommerce_challenge.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

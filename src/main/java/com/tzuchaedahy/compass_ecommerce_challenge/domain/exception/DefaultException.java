@@ -1,4 +1,4 @@
-package com.tzuchaedahy.compass_ecommerce_challenge.exception;
+package com.tzuchaedahy.compass_ecommerce_challenge.domain.exception;
 
 import java.util.HashMap;
 import java.util.Map;

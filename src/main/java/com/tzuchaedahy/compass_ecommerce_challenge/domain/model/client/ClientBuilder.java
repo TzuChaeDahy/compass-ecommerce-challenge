@@ -1,14 +1,15 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client;
 
+import static com.tzuchaedahy.compass_ecommerce_challenge.domain.util.Validations.isCPFValid;
+import static com.tzuchaedahy.compass_ecommerce_challenge.domain.util.Validations.isEmailValid;
+import static com.tzuchaedahy.compass_ecommerce_challenge.domain.util.Validations.isPasswordValid;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
-import static com.tzuchaedahy.compass_ecommerce_challenge.util.Validations.isCPFValid;
-import static com.tzuchaedahy.compass_ecommerce_challenge.util.Validations.isEmailValid;
-import static com.tzuchaedahy.compass_ecommerce_challenge.util.Validations.isPasswordValid;
 
 public class ClientBuilder {
     private final Client client;
