@@ -1,12 +1,18 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client;
 
+import java.util.Collection;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,13 +26,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "client")
-public class Client {
+public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String cpf;
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -54,6 +61,7 @@ public class Client {
         return email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -88,5 +96,15 @@ public class Client {
 
     public void setBuys(Set<Buy> buys) {
         this.buys = buys;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).toList(); 
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 }
