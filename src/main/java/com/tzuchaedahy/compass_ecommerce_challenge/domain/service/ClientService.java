@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.Client;
+import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.UserAlreadyRegisteredException;
 import com.tzuchaedahy.compass_ecommerce_challenge.infrastructure.repository.ClientRepository;
 
 @Service
@@ -21,5 +22,13 @@ public class ClientService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));    
 
         return client;
+    }
+
+    public Client register(Client client) {
+        if (clientRepository.existsByEmail(client.getEmail()) || clientRepository.existsByCpf(client.getCPF())) {
+            throw new UserAlreadyRegisteredException("user already registered");
+        }
+
+        return clientRepository.save(client);
     }
 }

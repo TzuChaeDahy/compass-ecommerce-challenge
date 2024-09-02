@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
 
@@ -48,11 +50,20 @@ public class ClientBuilder {
     }
 
     public ClientBuilder withPassword(String password) {
-        if (password == null || password.isBlank() || !isPasswordValid(password)) {
+        if (password == null || password.isBlank()) {
             this.errors.put("password", "client password is invalid");
         }
 
         this.client.setPassword(password);
+        return this;
+    }
+
+    public ClientBuilder withPasswordToEncode(String password, PasswordEncoder passwordEncoder) {
+        if (password == null || password.isBlank() || !isPasswordValid(password)) {
+            this.errors.put("password", "client password is invalid");
+        }
+
+        this.client.setPassword(passwordEncoder.encode(password));
         return this;
     }
 

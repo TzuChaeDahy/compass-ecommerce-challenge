@@ -1,6 +1,7 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.util;
 
 public class Validations {
+    // TODO: atualizar validacao de CPF
     public static Boolean isCPFValid(String cpf) {
         return cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
     }

@@ -10,4 +10,6 @@ import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, String> {
     Optional<Client> findByEmail(String email);
+    Boolean existsByEmail(String email);
+    Boolean existsByCpf(String cpf);
 }
