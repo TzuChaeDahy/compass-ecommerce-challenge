@@ -32,11 +32,9 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/client/register").permitAll()
-                .requestMatchers(HttpMethod.POST, "/client/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/client/register/admin").hasAnyAuthority(Role.ADMIN.toString())
-                .anyRequest().authenticated()
-                );
+                .requestMatchers(HttpMethod.POST, "/client/register", "/client/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/product/new", "/client/register/admin").hasAnyAuthority(Role.ADMIN.toString())
+                .anyRequest().authenticated());
 
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
