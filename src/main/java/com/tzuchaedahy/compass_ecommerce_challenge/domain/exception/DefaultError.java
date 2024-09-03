@@ -1,6 +1,7 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.exception;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultError {
@@ -14,6 +15,7 @@ public class DefaultError {
 
     public DefaultError(String message) {
         this.timestamp = LocalDateTime.now();
+        this.errors = new HashMap<>();
         this.errors.put("error", message);
     }
 

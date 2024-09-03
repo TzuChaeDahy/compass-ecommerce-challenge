@@ -11,20 +11,24 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @Configuration
 public class OpenAPIConfig {
 
-    @Bean
-    public OpenAPI custom() {
-        OpenAPI openAPI = new OpenAPI();
+	@Bean
+	public OpenAPI custom() {
+		OpenAPI openAPI = new OpenAPI();
 
-        openAPI
-                .info(
-                        new Info().title("Compass - Desafio E-commerce")
-                                .version("1.0"))
-                .components(
-                        new Components()
-                                .addSecuritySchemes(
-                                        "bearer",
-                                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
+		openAPI
+				.info(
+						new Info().title("Compass - Desafio E-commerce")
+								.version("1.0"))
+				.components(
+						new Components()
+								.addSecuritySchemes(
+										"JavaInUseSecurityScheme",
+										new SecurityScheme().name(
+												"JavaInUseSecurityScheme")
+												.type(SecurityScheme.Type.HTTP)
+												.scheme("bearer")
+												.bearerFormat("JWT")));
 
-        return openAPI;
-    }
+		return openAPI;
+	}
 }

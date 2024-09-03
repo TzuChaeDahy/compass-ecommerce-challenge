@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.ClientRequestDTO;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.LoginRequestDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.TokenResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.Client;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.ClientBuilder;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.ClientService;
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.TokenService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+
 
 @RestController
 @RequestMapping("/client")
 public class ClientHandler {
     @Autowired
     private ClientService clientService;
-
-    @Autowired
-    private TokenService tokenService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,9 +41,16 @@ public class ClientHandler {
                 .withRoles(Set.of(Role.CONSUMER))
                 .build();
 
-        Client registeredClient = clientService.register(client);
-        String token = tokenService.generate(registeredClient);
+        String token = clientService.register(client);
 
         return new ResponseEntity<>(new TokenResponseDTO(token), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    @SecurityRequirements
+    public ResponseEntity<TokenResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        String token = clientService.login(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
+
+        return new ResponseEntity<>(new TokenResponseDTO(token), HttpStatus.OK);
     }
 }

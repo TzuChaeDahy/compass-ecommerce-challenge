@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/client/register").permitAll()
-                .requestMatchers(HttpMethod.GET, "/client/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/client/login").permitAll()
                 .anyRequest().authenticated()
                 );
 

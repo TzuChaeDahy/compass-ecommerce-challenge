@@ -38,8 +38,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         return tokenService.validate(token);
     }
 
-    // TODO: Lembrar de remover isso
-    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -47,7 +45,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (email != null) {
             Client client = clientRepository.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("Client not found"));
+                    .orElseThrow(() -> new UsernameNotFoundException("client not found"));
 
             var authentication = new UsernamePasswordAuthenticationToken(client.getEmail(), null,
                     client.getAuthorities());
@@ -55,7 +53,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        doFilter(request, response, filterChain);
+        filterChain.doFilter(request, response);
     }
 
 }
