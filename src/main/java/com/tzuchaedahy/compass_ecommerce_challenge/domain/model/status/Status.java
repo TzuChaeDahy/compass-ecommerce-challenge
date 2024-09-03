@@ -1,9 +1,9 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.status;
 
 public enum Status {
-    AVAILABLE(1),
-    SELLED(2),
-    UNAVAILABLE(3);
+    AVAILABLE(0),
+    SELLED(1),
+    UNAVAILABLE(2);
 
     private final Integer value;
 

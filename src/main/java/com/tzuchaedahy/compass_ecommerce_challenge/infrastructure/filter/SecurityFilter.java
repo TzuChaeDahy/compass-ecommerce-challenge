@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             return null;
         }
 
-        token.replace("Bearer ", "");
+        token = token.replace("Bearer ", "");
 
         return tokenService.validate(token);
     }

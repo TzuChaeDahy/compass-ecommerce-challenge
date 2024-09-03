@@ -1,8 +1,8 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role;
 
 public enum Role {
-    ADMIN(1),
-    CONSUMER(2);
+    ADMIN(0),
+    CONSUMER(1);
 
     private final Integer value;
 
