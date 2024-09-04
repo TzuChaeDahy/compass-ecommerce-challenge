@@ -1,12 +1,12 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request;
 
-public class NewProductRequestDTO {
+public class ProductRequestDTO {
     private String name;
     private String description;
     private Float price;
     private Integer stock;
 
-    public NewProductRequestDTO(String name, String description, Float price, Integer stock) {
+    public ProductRequestDTO(String name, String description, Float price, Integer stock) {
         this.name = name;
         this.description = description;
         this.price = price;

@@ -53,7 +53,7 @@ public class ProductBuyBuilder {
     }
 
     public ProductBuyBuilder withQuantity(Integer quantity) {
-        if (quantity == null || quantity <= 0) {
+        if (quantity == null || quantity < 0) {
             this.errors.put("quantity", "quantity is invalid");
         }
 

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.UnableToBuyNoItemsException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.exception.UnableToCreateBuyException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.exception.UnableToCreateProductException;
@@ -53,6 +54,12 @@ public class DefaultExceptionHandler {
 
     @ExceptionHandler(ProductAlreadyRegisteredException.class)
     public ResponseEntity<DefaultError> handleProductAlreadyRegisteredException(ProductAlreadyRegisteredException exception) {
+
+        return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UnableToBuyNoItemsException.class)
+    public ResponseEntity<DefaultError> handleUnableToBuyNoItemsException(UnableToBuyNoItemsException exception) {
 
         return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
     }

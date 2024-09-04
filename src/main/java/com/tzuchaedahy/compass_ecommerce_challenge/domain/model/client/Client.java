@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
 
@@ -42,6 +43,7 @@ public class Client implements UserDetails {
     private Set<Role> roles;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    @JsonIgnore
     private Set<Buy> buys;
 
     public Client() {

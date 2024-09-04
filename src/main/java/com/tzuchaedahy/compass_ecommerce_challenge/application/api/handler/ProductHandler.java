@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.NewProductRequestDTO;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.ProductRequestDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ProductResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.exception.DefaultError;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.Product;
@@ -46,7 +46,7 @@ public class ProductHandler {
             ),
         }
     )
-    public ResponseEntity<ProductResponseDTO> createNewProducts(@RequestBody NewProductRequestDTO newProductRequestDTO) {
+    public ResponseEntity<ProductResponseDTO> createNewProducts(@RequestBody ProductRequestDTO newProductRequestDTO) {
         Product product = new ProductBuilder()
             .withName(newProductRequestDTO.getName())
             .withDescription(newProductRequestDTO.getDescription())
