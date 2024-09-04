@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.exception.UnableToCreateBuyException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.exception.UnableToCreateProductException;
+import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.ProductAlreadyRegisteredException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.UnableToAuthenticateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.UserAlreadyRegisteredException;
 
@@ -46,6 +47,12 @@ public class DefaultExceptionHandler {
 
     @ExceptionHandler(UnableToAuthenticateClientException.class)
     public ResponseEntity<DefaultError> handleCouldNotAuthenticateClientException(UnableToAuthenticateClientException exception) {
+
+        return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProductAlreadyRegisteredException.class)
+    public ResponseEntity<DefaultError> handleProductAlreadyRegisteredException(ProductAlreadyRegisteredException exception) {
 
         return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
     }

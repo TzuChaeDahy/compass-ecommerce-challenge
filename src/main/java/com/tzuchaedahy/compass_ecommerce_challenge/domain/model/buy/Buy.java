@@ -1,19 +1,15 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.Client;
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.Product;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,12 +20,9 @@ public class Buy {
     private UUID id;
 
     private LocalDateTime timestamp;
-    
+
     @ManyToOne
     private Client client;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "buy")
-    private Set<Product> products;
 
     public Buy() {
     }
@@ -46,10 +39,6 @@ public class Buy {
         return client;
     }
 
-    public Set<Product> getProducts() {
-        return products;
-    }
-
     public void setID(UUID id) {
         this.id = id;
     }
@@ -60,9 +49,5 @@ public class Buy {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 }

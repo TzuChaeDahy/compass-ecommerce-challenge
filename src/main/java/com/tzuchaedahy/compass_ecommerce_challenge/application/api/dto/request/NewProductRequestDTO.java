@@ -4,13 +4,13 @@ public class NewProductRequestDTO {
     private String name;
     private String description;
     private Float price;
-    private Integer quantity;
+    private Integer stock;
 
-    public NewProductRequestDTO(String name, String description, Float price, Integer quantity) {
+    public NewProductRequestDTO(String name, String description, Float price, Integer stock) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
+        this.stock = stock;
     }
 
     public String getName() {
@@ -25,8 +25,8 @@ public class NewProductRequestDTO {
         return price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 
 }

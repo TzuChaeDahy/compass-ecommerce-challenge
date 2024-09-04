@@ -1,7 +1,6 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.exception.DefaultError;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.Product;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.ProductBuilder;
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.status.Status;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,17 +46,18 @@ public class ProductHandler {
             ),
         }
     )
-    public ResponseEntity<Void> createNewProducts(@RequestBody NewProductRequestDTO newProductRequestDTO) {
+    public ResponseEntity<ProductResponseDTO> createNewProducts(@RequestBody NewProductRequestDTO newProductRequestDTO) {
         Product product = new ProductBuilder()
             .withName(newProductRequestDTO.getName())
             .withDescription(newProductRequestDTO.getDescription())
             .withPrice(newProductRequestDTO.getPrice())
-            .withStatus(Status.AVAILABLE)
+            .withStock(newProductRequestDTO.getStock())
             .build();
 
-        productService.createNewProduct(product, newProductRequestDTO.getQuantity());
+        ProductResponseDTO createdProductDTO = new ProductResponseDTO(productService.createNewProduct(product));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/all")
@@ -74,14 +73,9 @@ public class ProductHandler {
         }
     )
     public ResponseEntity<List<ProductResponseDTO>> listAllAvailableProducts() {
-        Map<Product, Integer> products = productService.listAllAvailableProducts();
+        List<Product> products = productService.listAll();
 
-        List<ProductResponseDTO> productsDTO = products.entrySet().stream().map(entry -> new ProductResponseDTO(
-            entry.getKey().getName(),
-            entry.getKey().getDescription(),
-            entry.getKey().getPrice(),
-            entry.getValue()
-        )).toList();
+        List<ProductResponseDTO> productsDTO = products.stream().map(product -> new ProductResponseDTO(product)).toList();
 
         return new ResponseEntity<>(productsDTO, HttpStatus.OK);
     }

@@ -1,16 +1,25 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response;
 
+import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.Product;
+
 public class ProductResponseDTO {
     private String name;
     private String description;
     private Float price;
-    private Integer quantity;
+    private Integer stock;
 
-    public ProductResponseDTO(String name, String description, Float price, Integer quantity) {
+    public ProductResponseDTO(String name, String description, Float price, Integer stock) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.quantity = quantity;
+        this.stock = stock;
+    }
+
+    public ProductResponseDTO(Product product) {
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.price = product.getPrice();
+        this.stock = product.getStock();
     }
 
     public String getName() {
@@ -25,7 +34,7 @@ public class ProductResponseDTO {
         return price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 }

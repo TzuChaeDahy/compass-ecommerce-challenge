@@ -2,17 +2,10 @@ package com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product;
 
 import java.util.UUID;
 
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.status.Status;
-
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,12 +21,7 @@ public class Product {
 
     private Float price;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Status status;
-
-    @ManyToOne
-    @Nullable
-    private Buy buy;
+    private Integer stock;
 
     public Product() {
     }
@@ -70,19 +58,11 @@ public class Product {
         this.price = price;
     }
 
-    public Status getStatus() {
-        return status;
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Buy getBuy() {
-        return buy;
-    }
-
-    public void setBuy(Buy buy) {
-        this.buy = buy;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }   

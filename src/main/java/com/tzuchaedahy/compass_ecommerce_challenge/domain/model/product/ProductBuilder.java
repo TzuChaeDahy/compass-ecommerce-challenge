@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.exception.UnableToCreateProductException;
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.status.Status;
 
 public class ProductBuilder {
     private final Product product;
@@ -57,21 +55,12 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder withStatus(Status status) {
-        if (status == null) {
-            this.errors.put("status", "product status is invalid");
+    public ProductBuilder withStock(Integer stock) {
+        if (stock == null || stock < 0) {
+            this.errors.put("stock", "product stock is invalid");
         }
 
-        this.product.setStatus(status);
-        return this;
-    }
-
-    public ProductBuilder withBuy(Buy buy) {
-        if (buy == null) {
-            this.errors.put("buy", "product buy is invalid");
-        }
-
-        this.product.setBuy(buy);
+        this.product.setStock(stock);
         return this;
     }
 
