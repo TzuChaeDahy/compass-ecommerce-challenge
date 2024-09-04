@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.role.Role;
 import com.tzuchaedahy.compass_ecommerce_challenge.infrastructure.filter.SecurityFilter;
 
 @Configuration
@@ -33,7 +32,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/client/register", "/client/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/product/new", "/client/register/admin").hasAnyAuthority(Role.ADMIN.toString())
                 .anyRequest().authenticated());
 
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

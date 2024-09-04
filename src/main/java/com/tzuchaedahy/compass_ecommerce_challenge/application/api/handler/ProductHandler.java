@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,7 @@ public class ProductHandler {
             ),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ProductResponseDTO> createNewProducts(@RequestBody ProductRequestDTO newProductRequestDTO) {
         Product product = new ProductBuilder()
             .withName(newProductRequestDTO.getName())
@@ -72,6 +74,7 @@ public class ProductHandler {
             content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductResponseDTO.class))),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<ProductResponseDTO>> listAllAvailableProducts() {
         List<Product> products = productService.listAll();
 

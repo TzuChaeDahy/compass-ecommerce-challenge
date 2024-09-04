@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,7 @@ public class ProductBuyHandler {
         }
     )
     @Transactional
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<BuyResponseDTO> buyProducts(@RequestBody BuyRequestDTO buyRequestDTO, UsernamePasswordAuthenticationToken token) {
         if (buyRequestDTO.getItems().isEmpty() || buyRequestDTO.getItems().stream().anyMatch(item -> item.getQuantity() <= 0)) {
             throw new UnableToBuyNoItemsException("client cannot buy 0 items");

@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,6 +78,7 @@ public class ClientHandler {
         @ApiResponse(responseCode = "400", description = "Invalid data", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
     })
     @Transactional
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<TokenResponseDTO> registerAdmin(@RequestBody ClientRequestDTO clientRequestDTO) {
         Client client = new ClientBuilder()
 
