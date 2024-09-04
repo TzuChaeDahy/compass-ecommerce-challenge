@@ -1,6 +1,7 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,5 +31,12 @@ public class BuyService {
                 .build();
 
         return buyRepository.save(buy);
+    }
+
+    public List<Buy> getBuys(String email) {
+        Client client = clientRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("client not found"));
+
+        return buyRepository.findAllByClient(client);
     }
 }

@@ -18,7 +18,7 @@ import com.tzuchaedahy.compass_ecommerce_challenge.infrastructure.repository.Pro
 @Service
 public class ProductBuyService {
     @Autowired
-    private ProductBuyRepository buyRepository;
+    private ProductBuyRepository productBuyRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -51,7 +51,7 @@ public class ProductBuyService {
                     .withPriceAtMoment(product.getPrice())
                     .build();
 
-            productBuys.add(buyRepository.save(productBuy));
+            productBuys.add(productBuyRepository.save(productBuy));
         }
 
         for (Product incompleteProduct : incompleteBoughtProducts) {
@@ -61,5 +61,9 @@ public class ProductBuyService {
         }
 
         return productBuys;
+    }
+
+    public List<ProductBuy> getProductBuysByBuy(Buy buy) {
+        return productBuyRepository.findAllByBuy(buy);
     }
 }

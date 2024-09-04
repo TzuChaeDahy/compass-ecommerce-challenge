@@ -10,14 +10,12 @@ import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product_buy.Prod
 public class BuyResponseDTO {
     private UUID id;
     private LocalDateTime timestamp;
-    private ClientResponseDTO client;
     private List<BoughtProductResponseDTO> products;
     private Float total = 0f;
 
     public BuyResponseDTO(Buy buy, List<ProductBuy> productBuys) {
         this.id = buy.getID();
         this.timestamp = buy.getTimestamp();
-        this.client = new ClientResponseDTO(buy.getClient());
         this.products = productBuys.stream().map(productBuy -> new BoughtProductResponseDTO(productBuy.getProduct()))
                 .toList();
         this.products.forEach(product -> {
@@ -31,10 +29,6 @@ public class BuyResponseDTO {
 
     public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    public ClientResponseDTO getClient() {
-        return client;
     }
 
     public List<BoughtProductResponseDTO> getProducts() {

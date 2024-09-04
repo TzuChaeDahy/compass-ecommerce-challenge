@@ -58,7 +58,6 @@ public class ProductHandler {
 
         ProductResponseDTO createdProductDTO = new ProductResponseDTO(productService.createNewProduct(product));
 
-
         return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
     }
 
