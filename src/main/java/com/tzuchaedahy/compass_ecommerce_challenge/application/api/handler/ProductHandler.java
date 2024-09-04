@@ -1,14 +1,19 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.NewProductRequestDTO;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ProductResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.exception.DefaultError;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.Product;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.ProductBuilder;
@@ -54,5 +59,30 @@ public class ProductHandler {
         productService.createNewProduct(product, newProductRequestDTO.getQuantity());
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/all")
+    @Tag(name = "Rotas de Cliente")
+    @Operation(
+        summary = "View all available products",
+        description = "View all available products in the store"
+    )
+    @ApiResponses(
+        value = {
+            @ApiResponse(responseCode = "200", description = "Products listed successfully",
+            content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductResponseDTO.class))),
+        }
+    )
+    public ResponseEntity<List<ProductResponseDTO>> listAllAvailableProducts() {
+        Map<Product, Integer> products = productService.listAllAvailableProducts();
+
+        List<ProductResponseDTO> productsDTO = products.entrySet().stream().map(entry -> new ProductResponseDTO(
+            entry.getKey().getName(),
+            entry.getKey().getDescription(),
+            entry.getKey().getPrice(),
+            entry.getValue()
+        )).toList();
+
+        return new ResponseEntity<>(productsDTO, HttpStatus.OK);
     }
 }
