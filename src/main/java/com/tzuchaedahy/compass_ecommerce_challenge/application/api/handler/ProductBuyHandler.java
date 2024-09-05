@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.BuyRequestDTO;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.BuyRequestDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.BuyResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ClientBuyResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ClientResponseDTO;

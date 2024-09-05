@@ -1,6 +1,8 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.exception;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +21,8 @@ public class DefaultError {
         this.errors.put("error", message);
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public OffsetDateTime getTimestamp() {
+        return OffsetDateTime.of(timestamp, ZoneOffset.UTC);
     }
 
     public Map<String, String> getErrors() {

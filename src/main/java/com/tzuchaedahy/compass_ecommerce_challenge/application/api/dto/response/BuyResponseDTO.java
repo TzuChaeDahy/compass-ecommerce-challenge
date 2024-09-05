@@ -1,6 +1,8 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,8 +29,8 @@ public class BuyResponseDTO {
         return id;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public OffsetDateTime getTimestamp() {
+        return OffsetDateTime.of(timestamp, ZoneOffset.UTC);
     }
 
     public List<BoughtProductResponseDTO> getProducts() {

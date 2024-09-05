@@ -8,12 +8,11 @@ public class BuyRequestDTO {
     public BuyRequestDTO() {
     }
 
-    public List<BuyItemRequestDTO> getItems() {
-        return items;
-    }
-
-    public void setItems(List<BuyItemRequestDTO> items) {
+    public BuyRequestDTO(List<BuyItemRequestDTO> items) {
         this.items = items;
     }
 
+    public List<BuyItemRequestDTO> getItems() {
+        return items;
+    }
 }
