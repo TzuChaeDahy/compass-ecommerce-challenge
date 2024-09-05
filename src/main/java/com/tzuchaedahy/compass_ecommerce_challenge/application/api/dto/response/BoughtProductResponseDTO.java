@@ -17,6 +17,13 @@ public class BoughtProductResponseDTO {
         this.price = product.getPrice();
     }
 
+    public BoughtProductResponseDTO(Product product, Integer quantity) {
+        this.id = product.getID();
+        this.name = product.getName();
+        this.quantity = quantity;
+        this.price = product.getPrice();
+    }
+
     public UUID getId() {
         return id;
     }

@@ -76,7 +76,9 @@ public class ProductBuyHandler {
 
         Buy buy = buyService.createBuy(token.getName());
 
-        List<ProductBuy> productBuys = productBuyService.buyProducts(buy, boughtProducts);
+        productBuyService.buyProducts(buy, boughtProducts);
+
+        List<ProductBuy> productBuys = productBuyService.getProductBuysByBuy(buy);
 
         BuyResponseDTO buyResponseDTO = new BuyResponseDTO(buy, productBuys);
 

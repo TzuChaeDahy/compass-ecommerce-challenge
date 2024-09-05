@@ -16,7 +16,7 @@ public class BuyResponseDTO {
     public BuyResponseDTO(Buy buy, List<ProductBuy> productBuys) {
         this.id = buy.getID();
         this.timestamp = buy.getTimestamp();
-        this.products = productBuys.stream().map(productBuy -> new BoughtProductResponseDTO(productBuy.getProduct()))
+        this.products = productBuys.stream().map(productBuy -> new BoughtProductResponseDTO(productBuy.getProduct(), productBuy.getQuantity()))
                 .toList();
         this.products.forEach(product -> {
             total += product.getPrice() * product.getQuantity();

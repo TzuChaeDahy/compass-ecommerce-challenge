@@ -10,6 +10,7 @@ import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.excep
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.exception.UnableToCreateBuyException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product.exception.UnableToCreateProductException;
+import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.NotEnoughStockException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.ProductAlreadyRegisteredException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.UnableToAuthenticateClientException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.exceptions.UserAlreadyRegisteredException;
@@ -60,6 +61,12 @@ public class DefaultExceptionHandler {
 
     @ExceptionHandler(UnableToBuyNoItemsException.class)
     public ResponseEntity<DefaultError> handleUnableToBuyNoItemsException(UnableToBuyNoItemsException exception) {
+
+        return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotEnoughStockException.class)
+    public ResponseEntity<DefaultError> handleNotEnoughStockException(NotEnoughStockException exception) {
 
         return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
     }
