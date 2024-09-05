@@ -1,5 +1,7 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -56,5 +58,9 @@ public class ClientService implements UserDetailsService {
         }
 
         return tokenService.generate(client);
+    }
+
+    public List<Client> getAll() {
+        return clientRepository.findAll();
     }
 }
