@@ -59,10 +59,10 @@ public class ProductHandler {
         ProductResponseDTO createdProductDTO = new ProductResponseDTO(productService.createNewProduct(product));
 
         return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
-    }
+    } 
 
     @GetMapping("/all")
-    @Tag(name = "Rotas de Cliente")
+    @Tag(name = "Rotas de Cliente (Não Autenticado)")
     @Operation(
         summary = "View all available products",
         description = "View all available products in the store"
@@ -73,7 +73,6 @@ public class ProductHandler {
             content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductResponseDTO.class))),
         }
     )
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
     public ResponseEntity<List<ProductResponseDTO>> listAllAvailableProducts() {
         List<Product> products = productService.listAll();
 

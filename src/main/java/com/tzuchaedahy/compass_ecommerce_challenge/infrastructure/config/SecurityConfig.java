@@ -32,6 +32,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/client/register", "/client/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/product/all").permitAll()
                 .anyRequest().authenticated());
 
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
