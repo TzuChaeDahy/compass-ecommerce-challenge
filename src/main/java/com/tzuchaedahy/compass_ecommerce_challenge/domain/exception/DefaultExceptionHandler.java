@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.EmptyNameException;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.UnableToBuyNoItemsException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.exception.UnableToCreateBuyException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
@@ -67,6 +68,12 @@ public class DefaultExceptionHandler {
 
     @ExceptionHandler(NotEnoughStockException.class)
     public ResponseEntity<DefaultError> handleNotEnoughStockException(NotEnoughStockException exception) {
+
+        return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmptyNameException.class)
+    public ResponseEntity<DefaultError> handleEmptyNameException(EmptyNameException exception) {
 
         return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
     }

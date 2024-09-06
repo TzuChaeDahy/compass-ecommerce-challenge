@@ -63,4 +63,10 @@ public class ClientService implements UserDetailsService {
     public List<Client> getAll() {
         return clientRepository.findAll();
     }
+
+    public Client updateClient(String name, Client client) {
+        client.setName(name);
+
+        return clientRepository.save(client);
+    }
 }
