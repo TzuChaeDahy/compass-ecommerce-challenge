@@ -6,13 +6,18 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product_buy.ProductBuy;
 
 public class BuyResponseDTO {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private UUID id;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDateTime timestamp;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<BoughtProductResponseDTO> products;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Float total = 0f;
 
     public BuyResponseDTO(Buy buy, List<ProductBuy> productBuys) {

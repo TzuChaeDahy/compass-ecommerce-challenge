@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.EmptyNameException;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.NoItemsBoughtException;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.UnableToBuyNoItemsException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.exception.UnableToCreateBuyException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.client.exception.UnableToCreateClientException;
@@ -76,5 +77,11 @@ public class DefaultExceptionHandler {
     public ResponseEntity<DefaultError> handleEmptyNameException(EmptyNameException exception) {
 
         return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoItemsBoughtException.class)
+    public ResponseEntity<DefaultError> handleNoItemsBoughtException(NoItemsBoughtException exception) {
+
+        return new ResponseEntity<>(new DefaultError(exception.getMessages()), HttpStatus.NOT_FOUND);
     }
 }

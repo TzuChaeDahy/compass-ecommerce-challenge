@@ -1,7 +1,10 @@
 package com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,8 @@ import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request.B
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.BuyResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ClientBuyResponseDTO;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ClientResponseDTO;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response.ReportResponseDTO;
+import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.NoItemsBoughtException;
 import com.tzuchaedahy.compass_ecommerce_challenge.application.api.handler.exceptions.UnableToBuyNoItemsException;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.exception.DefaultError;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.buy.Buy;
@@ -28,6 +34,7 @@ import com.tzuchaedahy.compass_ecommerce_challenge.domain.model.product_buy.Prod
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.BuyService;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.ClientService;
 import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.ProductBuyService;
+import com.tzuchaedahy.compass_ecommerce_challenge.domain.service.ProductService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -47,6 +54,9 @@ public class ProductBuyHandler {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private ProductService productService;
 
     @PostMapping
     @Tag(name = "Rotas de Cliente")
@@ -136,5 +146,70 @@ public class ProductBuyHandler {
         });
 
         return new ResponseEntity<>(clientBuyResponseDTOs, HttpStatus.OK);
+    }
+
+    @GetMapping("/report/{year}/{month}")
+    @Tag(name = "Rotas de Administrador")
+    @Operation(summary = "Get a report", description = "Get the report of sells of a given year and month")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Buys retrieved successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ReportResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
+    })
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<ReportResponseDTO> getReport(@PathVariable Integer year, @PathVariable Integer month) {
+        Float[] totalRevenue = { 0f };
+        Product mostSoldProduct = new Product();
+        Client[] mostBuyerClient = { new Client() };
+
+        List<Client> clients = clientService.getAll();
+
+        Float[] spentByClient = { 0f };
+        Map<UUID, Integer> productsSold = new HashMap<>();
+        clients.forEach(client -> {
+            client.setName(null);
+            Float[] totalSpent = { 0f };
+
+            List<Buy> buys = buyService.getBuys(client.getEmail());
+
+            buys = buys.stream()
+                    .filter(buy -> buy.getTimestamp().getYear() == year && buy.getTimestamp().getMonthValue() == month)
+                    .toList();
+
+            buys.forEach(buy -> {
+                List<ProductBuy> productBuys = productBuyService.getProductBuysByBuy(buy);
+
+                productBuys.forEach(productBuy -> {
+                    totalSpent[0] += productBuy.getPriceAtMoment() * productBuy.getQuantity();
+                    productsSold.merge(productBuy.getProduct().getID(), productBuy.getQuantity(), Integer::sum);
+                });
+            });
+
+            totalRevenue[0] += totalSpent[0];
+            if (totalSpent[0] > spentByClient[0]) {
+                spentByClient[0] = totalSpent[0];
+                mostBuyerClient[0] = client;
+            }
+        });
+
+        if (totalRevenue[0] == 0) {
+            throw new NoItemsBoughtException("no items bought in this period");
+        }
+
+        int maxQuantity = 0;
+        UUID maxProductID = null;
+
+        for (Map.Entry<UUID, Integer> entry : productsSold.entrySet()) {
+            if (entry.getValue() > maxQuantity) {
+                maxQuantity = entry.getValue();
+                maxProductID = entry.getKey();
+            }
+        }
+
+        mostSoldProduct = productService.findByID(maxProductID);
+        mostSoldProduct.setPrice(null);
+        mostSoldProduct.setStock(maxQuantity);
+
+        ReportResponseDTO report = new ReportResponseDTO(totalRevenue[0], mostSoldProduct, mostBuyerClient[0]);
+        return new ResponseEntity<>(report, HttpStatus.OK);
     }
 }

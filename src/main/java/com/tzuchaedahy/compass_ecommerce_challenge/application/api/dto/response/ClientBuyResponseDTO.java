@@ -2,8 +2,12 @@ package com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.response
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class ClientBuyResponseDTO {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private ClientResponseDTO client;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<BuyResponseDTO> buys;
 
     public ClientBuyResponseDTO(ClientResponseDTO client, List<BuyResponseDTO> buys) {
