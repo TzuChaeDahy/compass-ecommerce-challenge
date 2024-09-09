@@ -23,7 +23,7 @@ public class BeanConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Client client = new ClientBuilder()
-                .withCPF("536.841.890-65")
+                .withCPF("53684189065")
                 .withName("Admin").withEmail("admin@teste.com")
                 .withPasswordToEncode("Admin@123", passwordEncoder)
                 .withRoles(Set.of(Role.ADMIN, Role.CONSUMER))

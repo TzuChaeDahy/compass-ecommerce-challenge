@@ -7,9 +7,9 @@ public class ProductRequestDTO {
     private String name;
     @Schema(description = "Description of the product", example = "Descrição do Computador")
     private String description;
-    @Schema(description = "Price of the product", example = "10.00")
+    @Schema(description = "Price of the product", example = "3500.00")
     private Float price;
-    @Schema(description = "Stock of the product", example = "10")
+    @Schema(description = "Stock of the product", example = "40")
     private Integer stock;
 
     public ProductRequestDTO(String name, String description, Float price, Integer stock) {

@@ -66,7 +66,7 @@ public class ProductBuyHandler {
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
     })
     @Transactional
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CONSUMER')")
     public ResponseEntity<BuyResponseDTO> buyProducts(@RequestBody BuyRequestDTO buyRequestDTO,
             UsernamePasswordAuthenticationToken token) {
         if (buyRequestDTO.getItems().isEmpty()
@@ -102,7 +102,7 @@ public class ProductBuyHandler {
             @ApiResponse(responseCode = "200", description = "Buys retrieved successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = BuyResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
     })
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CONSUMER')")
     public ResponseEntity<List<BuyResponseDTO>> getBuys(UsernamePasswordAuthenticationToken token) {
         List<Buy> buys = buyService.getBuys(token.getName());
 

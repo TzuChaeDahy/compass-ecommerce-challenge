@@ -3,7 +3,7 @@ package com.tzuchaedahy.compass_ecommerce_challenge.application.api.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ClientRequestDTO {
-    @Schema(name = "cpf", example = "123.456.789-10")
+    @Schema(name = "cpf", example = "45445025004")
     private String cpf;
     @Schema(name = "name", example = "nome")
     private String name;

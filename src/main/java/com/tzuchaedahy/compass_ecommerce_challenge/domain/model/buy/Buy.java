@@ -50,4 +50,6 @@ public class Buy {
     public void setClient(Client client) {
         this.client = client;
     }
+
+
 }
