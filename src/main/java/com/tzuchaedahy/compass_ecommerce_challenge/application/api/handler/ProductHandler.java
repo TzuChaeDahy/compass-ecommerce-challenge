@@ -43,11 +43,11 @@ public class ProductHandler {
     @Tag(name = "Rotas de Administrador")
     @Operation(
         summary = "Create a new product",
-        description = "Create a new product with the given name, description, price and quantity"
+        description = "Create a new product in the system"
     )
     @ApiResponses(
         value = {
-            @ApiResponse(responseCode = "201", description = "Products created successfully",
+            @ApiResponse(responseCode = "201", description = "Product created successfully",
             content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = Void.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", 
             content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))
@@ -92,7 +92,7 @@ public class ProductHandler {
     @Tag(name = "Rotas de Administrador")
     @Operation(summary = "Update a product", parameters = @Parameter(name = "uuid", description = "UUID of the product to update", in = ParameterIn.PATH, required = true), description = "Update the name, description, price and stock of a product", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Client data", required = true, content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductRequestDTO.class))))
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Product updated successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductResponseDTO.class))),
+        @ApiResponse(responseCode = "201", description = "Product updated successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ProductResponseDTO.class))),
         @ApiResponse(responseCode = "400", description = "Invalid data", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
     })
     @Transactional
@@ -124,6 +124,6 @@ public class ProductHandler {
 
         ProductResponseDTO productDTO = new ProductResponseDTO(updatedProduct);
         
-        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+        return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
     }
 }

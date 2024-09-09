@@ -60,9 +60,9 @@ public class ProductBuyHandler {
 
     @PostMapping
     @Tag(name = "Rotas de Cliente")
-    @Operation(summary = "Buy some products", description = "Buy some products with the given products id and quantity")
+    @Operation(summary = "Buy some products", description = "Buy some products of the system")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Products created successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = BuyResponseDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Products bought successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = BuyResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
     })
     @Transactional
@@ -92,7 +92,7 @@ public class ProductBuyHandler {
 
         BuyResponseDTO buyResponseDTO = new BuyResponseDTO(buy, productBuys);
 
-        return new ResponseEntity<>(buyResponseDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(buyResponseDTO, HttpStatus.OK);
     }
 
     @GetMapping
@@ -152,7 +152,7 @@ public class ProductBuyHandler {
     @Tag(name = "Rotas de Administrador")
     @Operation(summary = "Get a report", description = "Get the report of sells of a given year and month")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Buys retrieved successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ReportResponseDTO.class))),
+            @ApiResponse(responseCode = "200", description = "Report retrieved successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ReportResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
     })
     @PreAuthorize("hasAnyAuthority('ADMIN')")

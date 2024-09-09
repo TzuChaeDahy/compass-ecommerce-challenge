@@ -65,7 +65,7 @@ public class ClientHandler {
 
     @PostMapping("/login")
     @Tag(name = "Rotas de Autenticação")
-    @Operation(summary = "Authenticate a client", description = "Authenticate a client in the system", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Client data", required = true, content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = LoginRequestDTO.class))))
+    @Operation(summary = "Authenticate a client", description = "Authenticate a client in the system", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Login data", required = true, content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = LoginRequestDTO.class))))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User logged successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TokenResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid data", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
@@ -78,7 +78,7 @@ public class ClientHandler {
 
     @PostMapping("/register/admin")
     @Tag(name = "Rotas de Administrador")
-    @Operation(summary = "Register a new admin", description = "Register a new admin in the system", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Client data", required = true, content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ClientRequestDTO.class))))
+    @Operation(summary = "Register a new admin", description = "Register a new admin in the system", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Admin data", required = true, content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = ClientRequestDTO.class))))
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Admin registered successfully", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = TokenResponseDTO.class))),
         @ApiResponse(responseCode = "400", description = "Invalid data", content = @io.swagger.v3.oas.annotations.media.Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DefaultError.class))),
